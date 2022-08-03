@@ -14,7 +14,7 @@ namespace Nevelson.Utils
         /// <param name="go"></param>
         /// <param name="components"></param>
         /// <returns></returns>
-        public static bool TryGetComponents<T>(this GameObject go, out T[] components) where T : Component
+        public static bool TryGetComponents<T>(this GameObject go, out T[] components)
         {
             components = go.GetComponents<T>();
             if (components == null || components.Length == 0)
@@ -31,7 +31,7 @@ namespace Nevelson.Utils
         /// <param name="go"></param>
         /// <param name="component"></param>
         /// <returns></returns>
-        public static bool TryGetComponentInChildren<T>(this GameObject go, out T component) where T : Component
+        public static bool TryGetComponentInChildren<T>(this GameObject go, out T component)
         {
             component = go.GetComponentInChildren<T>();
             if (component == null)
@@ -48,7 +48,7 @@ namespace Nevelson.Utils
         /// <param name="go"></param>
         /// <param name="components"></param>
         /// <returns></returns>
-        public static bool TryGetComponentsInChildren<T>(this GameObject go, out T[] components) where T : Component
+        public static bool TryGetComponentsInChildren<T>(this GameObject go, out T[] components)
         {
             components = go.GetComponentsInChildren<T>();
             if (components == null || components.Length == 0)

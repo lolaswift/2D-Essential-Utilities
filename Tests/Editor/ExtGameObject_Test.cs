@@ -16,6 +16,15 @@ namespace Nevelson.Utils
             go.AddComponent<MockComponent>();
             goChild.AddComponent<MockComponent>();
 
+            bool success0 = go.TryGetComponents(out IMockInterface[] mock0);
+            Assert.True(success0);
+            Assert.NotNull(mock0);
+            Assert.AreEqual(2, mock0.Length);
+            foreach (var i in mock0)
+            {
+                i.Test();
+            }
+
             bool success = go.TryGetComponents(out MockComponent[] mock);
             Assert.True(success);
 
@@ -43,6 +52,15 @@ namespace Nevelson.Utils
             goChild.transform.parent = go.transform;
             go.AddComponent<MockComponent>();
             goChild.AddComponent<MockComponent>();
+
+            bool success0 = go.TryGetComponentsInChildren(out IMockInterface[] mock0);
+            Assert.True(success0);
+            Assert.NotNull(mock0);
+            Assert.AreEqual(2, mock0.Length);
+            foreach (var i in mock0)
+            {
+                i.Test();
+            }
 
             bool success = go.TryGetComponentsInChildren(out MockComponent[] mock);
             Assert.True(success);
@@ -92,6 +110,11 @@ namespace Nevelson.Utils
             GameObject goChild = new GameObject();
             goChild.transform.parent = go.transform;
             goChild.AddComponent<MockComponent>();
+
+            bool success0 = go.TryGetComponentInChildren(out IMockInterface mock0);
+            Assert.True(success0);
+            Assert.NotNull(mock0);
+            mock0.Test();
 
             bool success = go.TryGetComponentInChildren(out MockComponent mock);
             Assert.True(success);

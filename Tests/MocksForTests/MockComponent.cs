@@ -2,7 +2,12 @@ using UnityEngine;
 
 namespace Nevelson.Utils
 {
-    public class MockComponent : MonoBehaviour
+    public interface IMockInterface
+    {
+        void Test();
+    }
+
+    public class MockComponent : MonoBehaviour, IMockInterface
     {
         public string MockStringField = "Mock String";
         public string MockStringGetterSetter { get; set; } = "Mock Strang";
@@ -11,6 +16,11 @@ namespace Nevelson.Utils
         {
             get => _mockString;
             set => _mockString = value;
+        }
+
+        public void Test()
+        {
+            Debug.Log("I am a test interface :D");
         }
     }
 }
