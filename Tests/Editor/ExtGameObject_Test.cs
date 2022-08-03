@@ -7,6 +7,117 @@ namespace Nevelson.Utils
     public class ExtGameObject_Test
     {
         [Test]
+        public void Test_TryGetComponents()
+        {
+            GameObject go = new GameObject();
+            GameObject goChild = new GameObject();
+            goChild.transform.parent = go.transform;
+            go.AddComponent<MockComponent>();
+            go.AddComponent<MockComponent>();
+            goChild.AddComponent<MockComponent>();
+
+            bool success = go.TryGetComponents(out MockComponent[] mock);
+            Assert.True(success);
+
+            Assert.NotNull(mock);
+            Assert.NotNull(mock[0]);
+            Assert.NotNull(mock[1]);
+            Assert.AreEqual(2, mock.Length);
+
+            GameObject.DestroyImmediate(mock[0]);
+            GameObject.DestroyImmediate(mock[1]);
+
+            success = go.TryGetComponents(out mock);
+            Assert.False(success);
+            Assert.AreEqual(0, mock.Length);
+
+            GameObject.DestroyImmediate(go);
+            GameObject.DestroyImmediate(goChild);
+        }
+
+        [Test]
+        public void Test_TryGetComponentsInChildren()
+        {
+            GameObject go = new GameObject();
+            GameObject goChild = new GameObject();
+            goChild.transform.parent = go.transform;
+            go.AddComponent<MockComponent>();
+            goChild.AddComponent<MockComponent>();
+
+            bool success = go.TryGetComponentsInChildren(out MockComponent[] mock);
+            Assert.True(success);
+
+            bool success2 = goChild.TryGetComponentsInChildren(out MockComponent[] mock2);
+            Assert.True(success2);
+
+            Assert.NotNull(mock);
+            Assert.NotNull(mock2);
+            Assert.NotNull(mock[0]);
+            Assert.NotNull(mock[1]);
+            Assert.AreEqual(2, mock.Length);
+            Assert.AreEqual(1, mock2.Length); //cause it's from the child
+
+
+            GameObject.DestroyImmediate(mock[0]);
+
+            bool success3 = go.TryGetComponentsInChildren(out MockComponent[] mock3);
+            Assert.True(success3);
+
+            bool success4 = goChild.TryGetComponentsInChildren(out MockComponent[] mock4);
+            Assert.True(success4);
+
+            Assert.AreEqual(1, mock3.Length);
+            Assert.AreEqual(1, mock4.Length);
+            Assert.NotNull(mock3);
+            Assert.NotNull(mock4);
+
+            GameObject.DestroyImmediate(mock[1]);
+
+            bool success5 = go.TryGetComponentsInChildren(out MockComponent[] mock5);
+            Assert.False(success5);
+
+            bool success6 = goChild.TryGetComponentsInChildren(out MockComponent[] mock6);
+            Assert.False(success6);
+            Assert.AreEqual(0, mock5.Length);
+            Assert.AreEqual(0, mock6.Length);
+
+            GameObject.DestroyImmediate(go);
+            GameObject.DestroyImmediate(goChild);
+        }
+
+        [Test]
+        public void Test_TryGetComponentInChildren()
+        {
+            GameObject go = new GameObject();
+            GameObject goChild = new GameObject();
+            goChild.transform.parent = go.transform;
+            goChild.AddComponent<MockComponent>();
+
+            bool success = go.TryGetComponentInChildren(out MockComponent mock);
+            Assert.True(success);
+
+            bool success2 = goChild.TryGetComponentInChildren(out MockComponent mock2);
+            Assert.True(success2);
+
+            Assert.NotNull(mock);
+            Assert.NotNull(mock2);
+            Assert.AreEqual(mock, mock2);
+
+            GameObject.DestroyImmediate(mock);
+            bool success3 = go.TryGetComponentInChildren(out MockComponent mock3);
+            Assert.False(success3);
+
+            bool success4 = goChild.TryGetComponentInChildren(out MockComponent mock4);
+            Assert.False(success4);
+
+            Assert.Null(mock3);
+            Assert.Null(mock4);
+
+            GameObject.DestroyImmediate(go);
+            GameObject.DestroyImmediate(goChild);
+        }
+
+        [Test]
         public void Test_AddCopiedComponent()
         {
             GameObject go = new GameObject();

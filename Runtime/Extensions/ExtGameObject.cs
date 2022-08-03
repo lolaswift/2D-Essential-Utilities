@@ -8,6 +8,57 @@ namespace Nevelson.Utils
     public static class ExtGameObject
     {
         /// <summary>
+        /// Try get call that returns all components of type T on object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="go"></param>
+        /// <param name="components"></param>
+        /// <returns></returns>
+        public static bool TryGetComponents<T>(this GameObject go, out T[] components) where T : Component
+        {
+            components = go.GetComponents<T>();
+            if (components == null || components.Length == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Try get call that returns first components of type T in parent and children
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="go"></param>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public static bool TryGetComponentInChildren<T>(this GameObject go, out T component) where T : Component
+        {
+            component = go.GetComponentInChildren<T>();
+            if (component == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Try get call that returns all components of type T in parent and children
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="go"></param>
+        /// <param name="components"></param>
+        /// <returns></returns>
+        public static bool TryGetComponentsInChildren<T>(this GameObject go, out T[] components) where T : Component
+        {
+            components = go.GetComponentsInChildren<T>();
+            if (components == null || components.Length == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// Call from the gameobject you want to add the component too.  Supply the component you want to copy.
         /// Example usage:
         ///  Health myHealth = gameObject.AddComponent<Health>(enemy.health);
