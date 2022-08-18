@@ -8,50 +8,6 @@ namespace Nevelson.Utils
     public class Utils_Test
     {
         [Test]
-        public void Test_ConvertVolumeToLogarithmic()
-        {
-            List<TestCase<float, float>> tc = new List<TestCase<float, float>>()
-            {
-                new TestCase<float, float> {
-                    name = "Below No Volume",
-                    input = -.5f,
-                    expected = -Mathf.Infinity,
-                },
-                new TestCase<float, float> {
-                    name = "No Volume",
-                    input = 0,
-                    expected = -Mathf.Infinity,
-                },
-                new TestCase<float, float> {
-                    name = "Low Volume",
-                    input = .25f,
-                    expected = -12.0412006f,
-                },
-                new TestCase<float, float> {
-                    name = "Mid Volume",
-                    input = .5f,
-                    expected = -6.02060032f,
-                },
-                new TestCase<float, float> {
-                    name = "Max volume",
-                    input = 1,
-                    expected = 0.0f,
-                },
-                new TestCase<float, float> {
-                    name = "Above Max Volume",
-                    input = -.5f,
-                    expected = -Mathf.Infinity,
-                },
-            };
-
-            foreach (var test in tc)
-            {
-                float volume = Utils.ConvertVolumeToLogarithmic(test.input);
-                Assert.AreEqual(test.expected, volume, test.name);
-            }
-        }
-
-        [Test]
         public void Test_GetCardinalDirection()
         {
             List<TestCase<Vector2, Vector2, Direction>> tc = new List<TestCase<Vector2, Vector2, Direction>>()

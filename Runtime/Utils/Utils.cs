@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,26 +9,6 @@ namespace Nevelson.Utils
 {
     public static class Utils
     {
-        /// <summary>
-        /// converts a float from range 0 to 1 to logarithmic scaling, which is what the mixer group uses
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <returns></returns>
-        public static float ConvertVolumeToLogarithmic(float volume)
-        {
-            if (volume < 0)
-            {
-                Debug.LogWarning("Passing in value less than 0, defaulting to 0");
-                volume = 0;
-            }
-            if (volume > 1)
-            {
-                Debug.LogWarning("Passing in value greater than 1, defaulting to 1");
-                volume = 1;
-            }
-            return Mathf.Log10(volume) * 20;
-        }
-
         /// <summary>
         /// Returns a cardinal direction based on start and end point.
         /// Returns NONE if there is no difference between start and endpoint
