@@ -36,7 +36,11 @@ namespace Nevelson.Utils
         protected override void ResetValue()
         {
             Debug.Log($"Resetting items in list: {name}");
-            items = resetValue;
+            items.Clear();
+            foreach (var resetItem in resetValue)
+            {
+                items.Add(resetItem);
+            }
         }
     }
 }
